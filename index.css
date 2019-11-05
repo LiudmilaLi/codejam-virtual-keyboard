@@ -1,0 +1,45 @@
+.div_one {
+  display: flex;
+  border: 2px solid gray;
+  width: 880px;
+  height: 300px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+  
+
+#keyboard {
+  display: flex;
+  width: 880px;
+  height: 300px;
+  border: 2px solid gray;
+  padding: 5px;
+  direction: row;
+  flex-wrap: wrap;
+  background-color: #eceaeb;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+#keyboard::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.keys {
+  width: 50px;
+  height: 50px;
+  border: 1px solid grey;
+  border-radius: 7%;
+  background-color: silver;
+  box-shadow: 1px;
+  margin: 3px;
+  padding: 3px;
+  flex-direction: row;
+}
+
+.active {
+  background: cyan;;
+}
