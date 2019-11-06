@@ -1,29 +1,32 @@
 .div_one {
   display: flex;
   border: 2px solid gray;
-  width: 880px;
-  height: 300px;
+  width: 1000px;
+  height: 150px;
   justify-content: center;
-  margin-bottom: 10px;
+  align-items: center;
+  margin-bottom: 3%;
+  margin-top: 5%;
+  columns: 200;
+  margin: 3% auto;
 }
   
-
-#keyboard {
-  display: flex;
-  width: 880px;
-  height: 300px;
+.keyboard {
+  width: 1000px;
+  height: 350px;
   border: 2px solid gray;
   padding: 5px;
-  direction: row;
+  background-color: rgba(252, 252, 252, 0.952);
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  display: flex;
+  position: relative;
   flex-wrap: wrap;
-  background-color: #eceaeb;
-  align-items: center;
-  justify-content: center;
-  
+  margin: 0 auto;
+  justify-content: center;   
 }
 
-#keyboard::after {
-  content: "";
+.keyboard::after {
+  content: '';
   display: block;
   clear: both;
 }
@@ -33,13 +36,16 @@
   height: 50px;
   border: 1px solid grey;
   border-radius: 7%;
-  background-color: silver;
+  background-color: rgb(48, 39, 167);
   box-shadow: 1px;
   margin: 3px;
   padding: 3px;
   flex-direction: row;
+  box-shadow: 0 0 10px rgba(7, 30, 233, 0.7);
+  font-size: 24px;
 }
 
 .active {
-  background: cyan;;
+  background: cyan;
 }
+  
