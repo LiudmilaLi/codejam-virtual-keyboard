@@ -30,7 +30,6 @@ const keyEng = [['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='
   ['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '∧', 'Shift'],
   ['Ctrl', 'Win', 'Alt', 'Space', 'Alt', '<', '∨', '>', 'Ctrl']];
 
-
 for (let i = 0; i < 5; i += 1) {
   keyboard.insertAdjacentHTML('beforeEnd', '<div class="row"></div>');
   let str = document.getElementsByClassName('row');
@@ -41,5 +40,98 @@ for (let i = 0; i < 5; i += 1) {
 
 let buttons = document.getElementsByClassName('button');
 for (let i = 0; i < buttons.length; i += 1) {
-  buttons[i].addEventListener('click', btn);
+  buttons[i].querySelectorAll('.keyboard');
+}
+
+let lastActiveKey;
+keyboard.addEventListener('click', (event) => {
+  const currentKey = event.target;
+  currentKey.classList.add('active');
+
+  if (lastActiveKey) {
+    lastActiveKey.classList.remove('active');
+  }
+
+  lastActiveKey = currentKey;
+  input.focus();
+});
+
+let ruLang = false;
+let lock = false;
+let check = false;
+
+function changeLangToRus() {
+  ruLang = true;
+  localStorage.setItem('rus', ruLang);
+  for (let i = 0; i < 5; i += 1) {
+    let str = document.getElementsByClassName('row');
+    str = str[i].children;
+    for (let j = 0; j < keyEng[i].length; j += 1) {
+      str[j].innerHTML = keyRus[i][j];
+    }
+  }
+}
+
+function changeLangToEng() {
+  ruLang = false;
+  localStorage.setItem('rus', ruLang);
+  for (let i = 0; i < 5; i += 1) {
+    let str = document.getElementsByClassName('row');
+    str = str[i].children;
+    for (let j = 0; j < keyEng[i].length; j += 1) {
+      str[j].innerHTML = keyEng[i][j];
+    }
+  }
+  if (lock) {
+    for (let i = 0; i < buttons.length; i += 1) {
+      if (buttons[i].id.slice(0, 3) === 'Key') {
+        buttons[i].innerHTML = buttons[i].innerHTML.toUpperCase();
+      }
+    }
+  }
+}
+
+let press = new Set();
+document.addEventListener('keydown', (event) => {
+  check = true;
+  buttons[event.code].click();
+  if (event.code === 'AltLeft' || event.shiftKey) {
+    press.add(event.code);
+    if (press.size === 2) {
+      if (!ruLang) { changeLangToRus(); } else { changeLangToEng(); }
+      press.clear();
+    }
+  }
+});
+
+switch (this.innerHTML) {
+  case 'ENG':
+    changeLangToEng();
+    input.focus();
+    break;
+  case 'Rus':
+    changeLangToRus();
+    input.focus();
+    break;
+  case 'Backspace':
+    input.focus();
+    if (check) { break; }
+    input.value = input.value.slice(0, -1);
+    break;
+  case 'Space':
+    input.focus();
+    if (check) { break; }
+    input.value += ' ';
+    break;
+  case 'Enter':
+    if (check) { break; }
+    input.value += '\n';
+    input.focus();
+    break;
+
+  default:
+    input.focus();
+    if (check) { break; }
+    input.value += this.innerHTML;
+    break;
 }
